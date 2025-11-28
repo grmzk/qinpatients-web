@@ -37,11 +37,13 @@ ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = [
     'https://qinpatients.m4site.ru',
     'https://qinpatients.ru',
+    'https://de.qinpatients.ru',
 ]
 
 CORS_ALLOWED_ORIGINS = [
     'https://qinpatients.m4site.ru',
     'https://qinpatients.ru',
+    'https://de.qinpatients.ru',
     'http://localhost:3000',
 ]
 

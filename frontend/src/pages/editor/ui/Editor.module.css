@@ -1,0 +1,90 @@
+.editorTabsMain {
+  width: 90%;
+  margin: 1em auto;
+}
+
+.editorTabs,
+.noEditorTabs {
+  min-height: 1.5em;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-auto-rows: auto;
+  align-items: center;
+  justify-content: start;
+  background-color: #d7d2cc;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+  padding: 0.5em 0.75em;
+  font-size: 0.9em;
+  border: 1px solid #999999;
+  gap: 0.5em;
+}
+
+.noEditorTabs {
+  grid-template-columns: 1fr;
+  font-size: 0.9em;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.editorTabs input {
+  display: none;
+}
+
+.editorTabs div {
+  min-width: 10em;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: inherit;
+  box-sizing: border-box;
+  width: 100%;
+  height: 1.5em;
+  padding: 0 0.5em;
+  border: rgba(0, 0, 0, 0.15) solid 1px;
+  color: rgba(0, 0, 0, 0.8);
+  background: #c4c2be;
+  cursor: pointer;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-items: center;
+}
+
+.editorTabs div:hover {
+  background: #304352;
+  color: #fff;
+  border: rgba(255, 255, 255, 0.5) solid 1px;
+}
+
+.editorTabs div:has(input:checked) {
+  background: #304352;
+  color: #fff;
+}
+
+.editorTabs label {
+  display: inline-block;
+  margin: 0 0.25em;
+  vertical-align: text-top;
+  width: 90%;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.icon {
+  color: #304352;
+}
+
+.editorTabs div:hover .icon,
+.editorTabs input:checked ~ .icon {
+  color: white;
+}
+
+.editorTabs div:hover .icon.close:hover {
+  color: #c4c2be;
+}
+
+@media (max-width: 1000px) {
+  .editorTabs {
+    grid-template-columns: 1fr 1fr;
+  }
+}

@@ -1,0 +1,27 @@
+{
+  // "typescript.tsdk": "${workspaceFolder}/frontend/node_modules/typescript/lib",
+  "python.defaultInterpreterPath": "${workspaceFolder}/backend/.venv/bin/python3",
+  "python-envs.pythonProjects": [],
+  "python.analysis.typeCheckingMode": "off",
+  "terminal.integrated.persistentSessionReviveProcess": "never",
+  "terminal.integrated.enablePersistentSessions": false,
+  "explorerSort.rules": [
+    {
+      "name": "FSD Structure",
+      "pathPattern": "**/src/**",
+      "priorities": [
+        { "condition": "name === 'app'", "priority": 1000 },
+        { "condition": "name === 'pages'", "priority": 999 },
+        { "condition": "name === 'widgets'", "priority": 998 },
+        {
+          "condition": "name === 'features'",
+          "priority": 998,
+          "referenceFile": "widgets",
+          "offset": -1
+        },
+        { "condition": "name === 'entities'", "priority": 996 },
+        { "condition": "name === 'shared'", "priority": 995 }
+      ]
+    }
+  ]
+}

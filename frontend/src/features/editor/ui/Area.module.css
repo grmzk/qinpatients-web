@@ -1,0 +1,87 @@
+.main {
+  padding-top: 0.5em;
+}
+
+.main hr {
+  margin: 0.25em 0;
+  line-height: 1px;
+}
+
+.titleBlock {
+  display: flex;
+}
+
+.sideBlock {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  margin-bottom: 0.25em;
+}
+
+.title {
+  font-family: inherit;
+  font-size: inherit;
+  text-decoration: underline;
+  text-align: left;
+  padding: 0 0.5em;
+  min-width: 8.5em;
+  max-width: 8.5em;
+}
+
+.option {
+  display: none;
+}
+
+.optionLabel,
+.optionTextLabel {
+  display: inline-block;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0 0.5em;
+  max-height: 1.15em;
+  min-height: 1.15em;
+  border: rgba(0, 0, 0, 0.15) solid 1px;
+  color: rgba(0, 0, 0, 0.8);
+  background: #c4c2be;
+  cursor: pointer;
+}
+
+.optionLabel:hover {
+  border: rgba(255, 255, 255, 0.5) solid 1px;
+}
+
+.option:checked + label {
+  background: #304352;
+  color: #fff;
+}
+
+.deleteIcon {
+  color: #5c6972;
+  margin-left: 3em;
+  cursor: pointer;
+}
+
+.deleteIcon:hover {
+  background: #5c6972;
+  color: #fff;
+  border: rgba(255, 255, 255, 0.5) solid 1px;
+}
+
+.optionText {
+  font-family: inherit;
+  font-size: inherit;
+  box-sizing: border-box;
+  padding: 0 0.5em;
+  max-width: 3.5em;
+  min-width: 3.5em;
+  max-height: 1.25em;
+  min-height: 1.25em;
+  border: none;
+  margin-left: 1em;
+}
+
+.optionTextLabel {
+  background: #304352;
+  color: #fff;
+  pointer-events: none;
+}

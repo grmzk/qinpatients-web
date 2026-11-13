@@ -1,0 +1,2 @@
+class FirebirdException(Exception):
+    pass

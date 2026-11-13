@@ -66,7 +66,7 @@ function MonitorTable({ department, diaryDate }: MonitorTableProps) {
           if (!case_disease.is_outcome) {
             classList.push(styles.processing);
           }
-          if (!["РЕАН. ЗАЛ", "ВСЕ ОТДЕЛЕНИЯ"].includes(department)) {
+          if (!["РЕАН ЗАЛ", "ВСЕ ОТДЕЛЕНИЯ"].includes(department)) {
             if (case_disease.is_inpatient && case_disease.inpatient_department !== department) {
               classList.push(styles.toOtherDepartment);
             }

@@ -42,10 +42,10 @@ function PatientHistoryTable({ patientInfo, history, isLoading }: PatientHistory
             content.push({
               data: case_disease,
               classList: classList,
-              onClick: () => {
-                dispatch(addEditorTab({ patientInfo, caseDisease: case_disease, editorType: "FIRST_EXAMINATION" }));
-                navigate("/editor");
-              },
+              // onClick: () => {
+              //   dispatch(addEditorTab({ patientInfo, caseDisease: case_disease, editorType: "FIRST_EXAMINATION" }));
+              //   navigate("/editor");
+              // },
             });
             return content;
           }, [])

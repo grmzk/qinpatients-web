@@ -26,9 +26,9 @@ function NavBar() {
       <NavLink to="search">
         <button>Поиск</button>
       </NavLink>
-      <NavLink to="editor">
+      {/* <NavLink to="editor">
         <button>Редактор: {tabsCount}</button>
-      </NavLink>
+      </NavLink> */}
       <NavLink to="login">
         {token ? <button onClick={() => handleLogoutClick()}>Выход</button> : <button>Вход</button>}
       </NavLink>

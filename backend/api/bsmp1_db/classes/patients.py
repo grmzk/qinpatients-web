@@ -15,7 +15,9 @@ class Patient:
     address: str
 
     def get_full_name(self) -> str:
-        full_name = f"{self.family} {self.name} {self.surname}".strip()
+        full_name = (
+            f"{self.family or ""} {self.name or ""} {self.surname or ""}"
+        ).strip()
         if not full_name:
             if self.sex == "М":
                 return "НЕИЗВЕСТНЫЙ"

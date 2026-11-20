@@ -2,7 +2,15 @@ import { useCallback, useEffect, useState } from "react";
 
 import { useNavigate } from "react-router";
 
-import { CaseDiseaseResponse, patientApi, PatientInfoResponse, SummaryResponse } from "../../../entities/patient";
+import {
+  CaseDiseaseResponse,
+  ExtraInfoInpatient,
+  ExtraInfoOutpatient,
+  ExtraInfoPatient,
+  patientApi,
+  PatientInfoResponse,
+  SummaryResponse,
+} from "../../../entities/patient";
 import { DATE_INPUT_DELAY, SUMMARY_UPDATE_INTERVAL } from "../../../shared/config/config";
 import Department from "../../../shared/types/Department";
 import { ISODate } from "../../../shared/types/ISODateStrings";
@@ -49,7 +57,7 @@ function MonitorTable({ department, diaryDate }: MonitorTableProps) {
       head: {
         АСУ: "card_id",
         "Ф. И. О.": "full_name",
-        Возраст: "age",
+        Возраст: "age_at_date",
         Отделение: "department",
         Диагноз: "diagnosis",
         "Время поступления": "admission_date",
@@ -77,7 +85,11 @@ function MonitorTable({ department, diaryDate }: MonitorTableProps) {
           content.push({
             data: { ...patient, ...case_disease },
             classList: classList,
-            onClick: () => navigate(`/patients/${patient.patient_id}`, { relative: "path" }),
+            action: () => navigate(`/patients/${patient.patient_id}`, { relative: "path" }),
+            actionTitle: "Все обращения",
+            extraInfoCol1: <ExtraInfoPatient patient={patient} />,
+            extraInfoCol2: <ExtraInfoOutpatient case_disease={case_disease} />,
+            extraInfoCol3: <ExtraInfoInpatient case_disease={case_disease} />,
           });
           return content;
         },

@@ -29,6 +29,7 @@ class CaseDisease:
     status: int
     reject: int
     inpatient_department: str
+    outpatient_id: int
     inpatient_id: int
     admission_doctor: str
     movements: list[Movement]
@@ -157,7 +158,18 @@ class CaseDisease:
         return self.inpatient_result or "НАХОДИТСЯ В СТАЦИОНАРЕ"
 
     def get_inpatient_id(self) -> int | str:
-        return self.inpatient_id or ""
+        return (
+            self.inpatient_id
+            if self.inpatient_id and self.inpatient_id > 0
+            else 0
+        )
+
+    def get_outpatient_id(self) -> int | str:
+        return (
+            self.outpatient_id
+            if self.outpatient_id and self.outpatient_id > 0
+            else 0
+        )
 
     def as_dict(self):
         return {
@@ -180,6 +192,7 @@ class CaseDisease:
                 if self.get_admission_diagnosis()
                 else ""
             ),
+            "outpatient_id": self.get_outpatient_id(),
             "inpatient_id": self.get_inpatient_id(),
             "inpatient_department": self.inpatient_department or "",
             "doctor": self.admission_doctor or "",
@@ -187,4 +200,14 @@ class CaseDisease:
             "is_reanimation": self.is_reanimation_hole(),
             "is_outcome": self.is_outcome(),
             "is_inpatient": self.is_inpatient(),
+            "trauma_type": self.trauma_type,
+            "directed": self.directed_from or self.directed,
+            "notices": [notice.as_dict() for notice in self.notices],
+            "movements": [movement.as_dict() for movement in self.movements],
+            "surgeries": [surgery.as_dict() for surgery in self.surgeries],
+            "inpatient_diagnosis": [
+                diagnosis_icd.as_dict()
+                for diagnosis_icd in self.inpatient_diagnosis
+            ],
+            "inpatient_result": self.get_inpatient_result() or "",
         }

@@ -5,6 +5,7 @@ type PatientInfoResponse = {
   full_name: string;
   birthday: ISODate;
   age: string;
+  age_at_date: string;
   workplace: string;
   address: string;
   extra_info: string;

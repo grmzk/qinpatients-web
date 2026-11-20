@@ -1,6 +1,6 @@
 {
   "root": true,
-  "plugins": ["@typescript-eslint", "import", "react", "react-hooks"],
+  "plugins": ["@typescript-eslint", "import", "react", "react-hooks", "boundaries"],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
@@ -10,9 +10,109 @@
     "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
-  "settings": {
-    "react": { "version": "detect" }
+  "parserOptions": {
+    "ecmaVersion": 2024,
+    "sourceType": "module"
   },
+  "settings": {
+    "react": { "version": "detect" },
+    "boundaries/elements": [
+      {
+        "type": "shared",
+        "pattern": "src/shared/**/*",
+        "capture": ["elementType", "elementName"]
+      },
+      {
+        "type": "entities",
+        "pattern": "src/entities/**/*",
+        "capture": ["elementType", "elementName"]
+      },
+      {
+        "type": "features",
+        "pattern": "src/features/**/*",
+        "capture": ["elementType", "elementName"]
+      },
+      {
+        "type": "widgets",
+        "pattern": "src/widgets/**/*",
+        "capture": ["elementType", "elementName"]
+      },
+      {
+        "type": "pages",
+        "pattern": "src/pages/**/*",
+        "capture": ["elementType", "elementName"]
+      },
+      {
+        "type": "app",
+        "pattern": "src/app/**/*",
+        "capture": ["elementType", "elementName"]
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["src/**/*.ts", "src/**/*.tsx"],
+      "rules": {
+        "boundaries/dependencies": [
+          "warn",
+          {
+            "default": "disallow",
+            "policies": [
+              {
+                "from": [{ "element": { "type": "shared" } }],
+                "allow": [{ "to": { "element": { "type": "shared" } } }]
+              },
+              {
+                "from": [{ "element": { "type": "entities" } }],
+                "allow": [
+                  { "to": { "element": { "type": "shared" } } },
+                  { "to": { "element": { "type": "entities" } } }
+                ]
+              },
+              {
+                "from": [{ "element": { "type": "features" } }],
+                "allow": [
+                  { "to": { "element": { "type": "shared" } } },
+                  { "to": { "element": { "type": "entities" } } },
+                  { "to": { "element": { "type": "features" } } }
+                ]
+              },
+              {
+                "from": [{ "element": { "type": "widgets" } }],
+                "allow": [
+                  { "to": { "element": { "type": "shared" } } },
+                  { "to": { "element": { "type": "entities" } } },
+                  { "to": { "element": { "type": "features" } } },
+                  { "to": { "element": { "type": "widgets" } } }
+                ]
+              },
+              {
+                "from": [{ "element": { "type": "pages" } }],
+                "allow": [
+                  { "to": { "element": { "type": "shared" } } },
+                  { "to": { "element": { "type": "entities" } } },
+                  { "to": { "element": { "type": "features" } } },
+                  { "to": { "element": { "type": "widgets" } } },
+                  { "to": { "element": { "type": "pages" } } }
+                ]
+              },
+              {
+                "from": [{ "element": { "type": "app" } }],
+                "allow": [
+                  { "to": { "element": { "type": "shared" } } },
+                  { "to": { "element": { "type": "entities" } } },
+                  { "to": { "element": { "type": "features" } } },
+                  { "to": { "element": { "type": "widgets" } } },
+                  { "to": { "element": { "type": "pages" } } },
+                  { "to": { "element": { "type": "app" } } }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
   "rules": {
     "import/order": [
       "warn",
@@ -60,5 +160,5 @@
     "@typescript-eslint/no-unused-expressions": "off",
     "@typescript-eslint/no-empty-function": "off"
   },
-  "ignorePatterns": ["src/**/*.test.ts"]
+  "ignorePatterns": ["src/**/*.test.ts", "build/", "dist/"]
 }

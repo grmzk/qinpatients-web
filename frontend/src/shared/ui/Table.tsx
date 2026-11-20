@@ -1,6 +1,4 @@
-import { ReactElement, useEffect, useState } from "react";
-
-import { v4 as uuidv4 } from "uuid";
+import { Fragment, ReactElement, useEffect, useState } from "react";
 
 import formatToLocaleDate from "../lib/formatToLocaleDate";
 import { isISODate, isISODateTime } from "../types/ISODateStrings";
@@ -23,6 +21,7 @@ function Table({ title, tableContent, helpMessage, noDataMessage, isLoading = fa
   const [content, setContent] = useState<typeof tableContent.content>(tableContent.content);
   const [orderBy, setOrderBy] = useState<keyof typeof tableContent.head>("");
   const [ascending, setAscending] = useState<boolean>(true);
+  const [extraInfoIndex, setExtraInfoIndex] = useState<number>(0);
 
   useEffect(() => {
     setContent(tableContent.content);
@@ -46,6 +45,10 @@ function Table({ title, tableContent, helpMessage, noDataMessage, isLoading = fa
     ascending ? setContent(content) : setContent(content.reverse());
   }, [tableContent, orderBy, ascending]);
 
+  useEffect(() => {
+    isLoading && setExtraInfoIndex(0);
+  }, [isLoading]);
+
   function handleSort(newOrderBy: keyof typeof tableContent.head) {
     if (orderBy === newOrderBy) {
       setAscending(!ascending);
@@ -53,6 +56,7 @@ function Table({ title, tableContent, helpMessage, noDataMessage, isLoading = fa
     }
     setOrderBy(newOrderBy);
     setAscending(true);
+    setExtraInfoIndex(0);
   }
 
   return (
@@ -77,20 +81,43 @@ function Table({ title, tableContent, helpMessage, noDataMessage, isLoading = fa
           </thead>
           <tbody title={helpMessage}>
             {content.map((contentItem, index) => (
-              <tr
-                className={contentItem.classList ? contentItem.classList.join(" ") : ""}
-                key={uuidv4()}
-                onClick={contentItem.onClick}
-              >
-                <td>{index + 1}</td>
-                {Object.entries(tableContent.head).map(([_, key]) => (
-                  <td key={uuidv4()}>
-                    {isISODate(contentItem.data[key]) || isISODateTime(contentItem.data[key])
-                      ? formatToLocaleDate(contentItem.data[key])
-                      : contentItem.data[key]}
-                  </td>
-                ))}
-              </tr>
+              <Fragment key={index}>
+                <tr
+                  className={
+                    (contentItem.classList ? contentItem.classList.join(" ") + " " : "") +
+                    (index + 1 === extraInfoIndex ? styles.extraInfoSelectedRow : "")
+                  }
+                  onClick={() => (extraInfoIndex === index + 1 ? setExtraInfoIndex(0) : setExtraInfoIndex(index + 1))}
+                  onDoubleClick={contentItem.action}
+                >
+                  <td>{index + 1}</td>
+                  {Object.entries(tableContent.head).map(([title, key]) => (
+                    <td key={title}>
+                      {isISODate(contentItem.data[key]) || isISODateTime(contentItem.data[key])
+                        ? formatToLocaleDate(contentItem.data[key])
+                        : contentItem.data[key]}
+                    </td>
+                  ))}
+                </tr>
+                {!!(contentItem?.extraInfoCol1 || contentItem?.extraInfoCol2 || contentItem?.extraInfoCol3) &&
+                  index + 1 === extraInfoIndex && (
+                    <tr className={contentItem.classList ? contentItem.classList.join(" ") : ""}>
+                      <td className={styles.extraInfo} colSpan={Object.keys(tableContent.head).length + 1}>
+                        <div className={styles.extraInfoHeader}>
+                          {!!contentItem?.actionTitle && (
+                            <button onClick={contentItem?.action}>{contentItem?.actionTitle}</button>
+                          )}
+                          <button onClick={() => setExtraInfoIndex(0)}>Закрыть</button>
+                        </div>
+                        <div className={styles.extraInfoContent}>
+                          <div>{contentItem?.extraInfoCol1}</div>
+                          <div>{contentItem?.extraInfoCol2}</div>
+                          <div>{contentItem?.extraInfoCol3}</div>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+              </Fragment>
             ))}
           </tbody>
         </table>

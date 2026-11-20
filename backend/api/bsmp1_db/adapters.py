@@ -54,6 +54,7 @@ def get_from_db(
         "       main_card.id_dvig, "
         "       main_card.id_otkaz, "
         "       inpatient_department.short, "
+        "       main_card.n_card2, "
         "       main_card.n_card1, "
         "       doctor.last_name "
         "           || ' ' || doctor.first_name "
@@ -168,7 +169,7 @@ def get_from_db(
         grouped_response[item[9]] = [item]
     cleaned_response = []
     for item_list in grouped_response.values():
-        cleaned_item = list(item_list[0][:21])
+        cleaned_item = list(item_list[0][:22])
         movements_ids: list[int] = []
         movements = []
         surgeries_ids: list[int] = []
@@ -178,23 +179,23 @@ def get_from_db(
         notices_ids: list[int] = []
         notices = []
         for item in item_list:
-            if item[21] and item[21] not in movements_ids:
-                movements.append(Movement(*item[22:27]))
-                movements_ids.append(item[21])
-            if item[27] and item[27] not in surgeries_ids:
+            if item[22] and item[22] not in movements_ids:
+                movements.append(Movement(*item[23:28]))
+                movements_ids.append(item[22])
+            if item[28] and item[28] not in surgeries_ids:
                 surgeries.append(
                     Surgery(
-                        item[28].strip().capitalize() if item[28] else None,
-                        *item[29:32],
+                        item[29].strip().capitalize() if item[29] else None,
+                        *item[30:33],
                     )
                 )
-                surgeries_ids.append(item[27])
-            if item[32] and item[32] not in inpatient_diagnosis_ids:
-                inpatient_diagnosis.append(DiagnosisMkb(*item[32:35]))
-                inpatient_diagnosis_ids.append(item[32])
-            if item[35] and item[35] not in notices_ids:
-                notices.append(Notice(*item[36:40]))
-                notices_ids.append(item[35])
+                surgeries_ids.append(item[28])
+            if item[33] and item[33] not in inpatient_diagnosis_ids:
+                inpatient_diagnosis.append(DiagnosisMkb(*item[33:36]))
+                inpatient_diagnosis_ids.append(item[33])
+            if item[36] and item[36] not in notices_ids:
+                notices.append(Notice(*item[37:41]))
+                notices_ids.append(item[36])
         movements.sort(key=lambda movement: movement.order)
         surgeries.sort(key=lambda surgery: surgery.date)
         inpatient_diagnosis.sort(key=lambda diagnosis: diagnosis.order)
@@ -203,7 +204,7 @@ def get_from_db(
         cleaned_item.append(surgeries)
         cleaned_item.append(inpatient_diagnosis)
         cleaned_item.append(notices)
-        cleaned_item.extend(item_list[0][40:])
+        cleaned_item.extend(item_list[0][41:])
         cleaned_response.append(cleaned_item)
     data = []
     for item in cleaned_response:

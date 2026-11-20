@@ -22,7 +22,11 @@
   "scripts": {
     "start": "vite --host 0.0.0.0 --port 3000 --strictPort",
     "build": "tsc --noEmit && vite build",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run --passWithNoTests",
+    "lint": "eslint src/ --ext .ts,.tsx",
+    "lint:fix": "eslint src/ --ext .ts,.tsx --fix",
+    "lint:fsd": "eslint src/ --ext .ts,.tsx --rule 'boundaries/element-types: warn'",
+    "lint:check": "eslint src/ --ext .ts,.tsx --format json > lint-report.json 2>&1 || true && node -e \"const r = require('./lint-report.json'); console.log('Total errors:', r.reduce((sum, f) => sum + f.messages.filter(m => m.severity === 2).length, 0)); console.log('Total warnings:', r.reduce((sum, f) => sum + f.messages.filter(m => m.severity === 1).length, 0))\""
   },
   "engines": {
     "node": "^22.12.0 || ^24.0.0 || >=26.0.0"
@@ -33,6 +37,7 @@
     "@eslint/js": "^9.26.0",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.1.2",
+    "eslint-plugin-boundaries": "^7.4.4",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-prettier": "^5.4.0",
     "eslint-plugin-react": "^7.37.5",

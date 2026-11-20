@@ -1,0 +1,38 @@
+{
+  "plugins": ["boundaries"],
+  "extends": [],
+  "rules": {
+    "boundaries/element-types": [
+      "warn",
+      {
+        "default": "disallow",
+        "rules": [
+          {
+            "from": ["shared"],
+            "allow": ["shared"]
+          },
+          {
+            "from": ["entities"],
+            "allow": ["shared", "entities"]
+          },
+          {
+            "from": ["features"],
+            "allow": ["shared", "entities", "features"]
+          },
+          {
+            "from": ["widgets"],
+            "allow": ["shared", "entities", "features", "widgets"]
+          },
+          {
+            "from": ["pages"],
+            "allow": ["shared", "entities", "features", "widgets", "pages"]
+          },
+          {
+            "from": ["app"],
+            "allow": ["shared", "entities", "features", "widgets", "pages", "app"]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -59,7 +59,7 @@ function BodyPart({ state, setState, areas, makeAreaState }: BodyPartProps) {
             state={area}
             setState={(newState: AreaState) => setAreaState(newState, index)}
             deleteArea={() => deleteArea(index)}
-            key={uuidv4()}
+            key={index}
           />
         ))}
         {state.symptoms && <TitleOptions state={state.symptoms} setState={setSymptoms} />}

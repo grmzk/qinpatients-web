@@ -2,7 +2,14 @@ import { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router";
 
-import { CaseDiseaseResponse, PatientInfoResponse, SummaryResponse } from "../../../entities/patient";
+import {
+  CaseDiseaseResponse,
+  ExtraInfoInpatient,
+  ExtraInfoOutpatient,
+  ExtraInfoPatient,
+  PatientInfoResponse,
+  SummaryResponse,
+} from "../../../entities/patient";
 import { ContentOfTableContent, TableContent } from "../../../shared/types/TableContent";
 import Table from "../../../shared/ui/Table";
 import styles from "../../../shared/ui/Table.module.css";
@@ -46,7 +53,11 @@ function SearchTable({ searchResponse, isLoading }: SearchTableProps) {
           content.push({
             data: { ...patient, ...case_disease },
             classList: classList,
-            onClick: () => navigate(`/patients/${patient.patient_id}`, { relative: "path" }),
+            action: () => navigate(`/patients/${patient.patient_id}`, { relative: "path" }),
+            actionTitle: "Все обращения",
+            extraInfoCol1: <ExtraInfoPatient patient={patient} />,
+            extraInfoCol2: <ExtraInfoOutpatient case_disease={case_disease} />,
+            extraInfoCol3: <ExtraInfoInpatient case_disease={case_disease} />,
           });
           return content;
         },

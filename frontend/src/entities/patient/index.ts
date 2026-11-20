@@ -1,4 +1,7 @@
 export { default as patientApi } from "./api/patientApi";
+export { default as ExtraInfoInpatient } from "./ui/ExtraInfoInpatient";
+export { default as ExtraInfoOutpatient } from "./ui/ExtraInfoOutpatient";
+export { default as ExtraInfoPatient } from "./ui/ExtraInfoPatient";
 export { default as PatientInfo } from "./ui/PatientInfo";
 export type { default as CaseDiseaseResponse } from "./model/CaseDiseaseResponse";
 export type { default as PatientHistoryResponse } from "./model/PatientHistoryResponse";

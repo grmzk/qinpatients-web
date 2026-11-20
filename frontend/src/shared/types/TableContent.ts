@@ -1,12 +1,20 @@
-type ContentDataExtends = Record<string, string | number | boolean>;
+import { ReactNode } from "react";
 
-export type ContentOfTableContent<ContentData extends ContentDataExtends> = {
+type TableColumnKey<ContentData extends object> = {
+  [Key in keyof ContentData]-?: ContentData[Key] extends string | number | boolean ? Key : never;
+}[keyof ContentData];
+
+export type ContentOfTableContent<ContentData extends object> = {
   data: ContentData;
   classList?: string[];
-  onClick?: () => void;
+  action?: () => void;
+  actionTitle?: string;
+  extraInfoCol1?: ReactNode;
+  extraInfoCol2?: ReactNode;
+  extraInfoCol3?: ReactNode;
 };
 
-export type TableContent<ContentData extends ContentDataExtends> = {
-  head: Record<string, keyof ContentData>;
+export type TableContent<ContentData extends object> = {
+  head: Record<string, TableColumnKey<ContentData>>;
   content: ContentOfTableContent<ContentData>[];
 };

@@ -69,7 +69,8 @@ class Patient:
             "surname": self.surname.upper() if self.surname else "",
             "full_name": self.get_full_name(),
             "birthday": self.get_birthday(),
-            "age": self.get_age(at_date),
+            "age": self.get_age(),
+            "age_at_date": self.get_age(at_date),
             "sex": self.sex or "",
             "workplace": (
                 self.get_workplace().upper() if self.workplace else ""

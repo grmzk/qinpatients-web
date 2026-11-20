@@ -12,4 +12,12 @@ class Notice:
     def get_date(self) -> str | None:
         if not self.date or (self.date.year == 1):
             return None
-        return self.date.strftime('%d.%m.%Y %H:%M')
+        return self.date.strftime("%d.%m.%Y %H:%M")
+
+    def as_dict(self):
+        return {
+            "date": self.get_date() or "",
+            "where": self.where,
+            "transmitted": self.transmitted,
+            "received": self.received,
+        }

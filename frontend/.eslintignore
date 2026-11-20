@@ -1,0 +1,10 @@
+node_modules/
+build/
+dist/
+.vscode/
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+coverage/
+.DS_Store

@@ -36,3 +36,11 @@ class Movement:
         if not self.outcome_date:
             return None
         return self.outcome_date.strftime("%d.%m.%Y %H:%M")
+
+    def as_dict(self):
+        return {
+            "department": self.department,
+            "bed_type": self.get_bed_type(),
+            "income_date": self.get_income_date(),
+            "outcome_date": self.get_outcome_date(),
+        }

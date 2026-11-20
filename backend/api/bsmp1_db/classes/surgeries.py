@@ -14,3 +14,11 @@ class Surgery:
         if not self.date or (self.date.year == 1):
             return None
         return self.date.strftime("%d.%m.%Y")
+
+    def as_dict(self):
+        return {
+            "title": self.title or "",
+            "date": self.get_date() or "",
+            "department": self.department or "",
+            "doctor": self.doctor or "",
+        }

@@ -1,7 +1,13 @@
 import { useNavigate } from "react-router";
 
 import { useAppDispatch } from "../../../app/store/hooks";
-import { CaseDiseaseResponse, PatientInfoResponse } from "../../../entities/patient";
+import {
+  CaseDiseaseResponse,
+  ExtraInfoInpatient,
+  ExtraInfoOutpatient,
+  ExtraInfoPatient,
+  PatientInfoResponse,
+} from "../../../entities/patient";
 import { addEditorTab } from "../../../features/editor";
 import { ContentOfTableContent, TableContent } from "../../../shared/types/TableContent";
 import Table from "../../../shared/ui/Table";
@@ -30,6 +36,7 @@ function PatientHistoryTable({ patientInfo, history, isLoading }: PatientHistory
     content:
       patientInfo && history
         ? history.reduce<ContentOfTableContent<CaseDiseaseResponse>[]>((content, case_disease) => {
+            case_disease.inpatient_id = case_disease.inpatient_id || "";
             const classList: string[] = [];
             if (case_disease.is_reanimation) {
               classList.push(styles.reanimation);
@@ -42,10 +49,13 @@ function PatientHistoryTable({ patientInfo, history, isLoading }: PatientHistory
             content.push({
               data: case_disease,
               classList: classList,
-              // onClick: () => {
+              // action: () => {
               //   dispatch(addEditorTab({ patientInfo, caseDisease: case_disease, editorType: "FIRST_EXAMINATION" }));
               //   navigate("/editor");
               // },
+              extraInfoCol1: <ExtraInfoPatient patient={patientInfo} />,
+              extraInfoCol2: <ExtraInfoOutpatient case_disease={case_disease} />,
+              extraInfoCol3: <ExtraInfoInpatient case_disease={case_disease} />,
             });
             return content;
           }, [])

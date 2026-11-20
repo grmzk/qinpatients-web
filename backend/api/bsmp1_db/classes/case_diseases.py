@@ -101,6 +101,16 @@ class CaseDisease:
             or pattern_therapy.match(self.admission_department)
         )
 
+    def is_reanimation_hole_reg_bug(self) -> bool:
+        return bool(
+            self.is_reanimation_hole()
+            and self.admission_diagnosis
+            and self.is_inpatient()
+            and (len(self.movements) == 1)
+            and (self.movements[0].get_bed_type() == "РЕАН ЗАЛ")
+            and not self.movements[0].get_outcome_date()
+        )
+
     def is_reanimation_hole_death(self) -> bool:
         return bool(
             self.is_reanimation_hole()
@@ -108,6 +118,7 @@ class CaseDisease:
             and self.is_inpatient()
             and (len(self.movements) == 1)
             and (self.movements[0].get_bed_type() == "РЕАН ЗАЛ")
+            and self.movements[0].get_outcome_date()
         )
 
     def is_inpatient_death(self) -> bool:
@@ -133,6 +144,8 @@ class CaseDisease:
             if hours < 0:
                 return "0 ч. 0 мин."
             return f"{hours} ч. {minutes} мин."
+        if self.is_reanimation_hole_reg_bug():
+            return "РЕГИСТРАТУРОЙ НЕ ЗАПОЛНЕНО ДВИЖЕНИЕ"
         if self.is_reanimation_hole_death():
             return "УМЕР В РЕАН ЗАЛЕ"
         if self.is_reanimation_hole_no_data_transmitted():
